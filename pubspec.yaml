@@ -1,0 +1,47 @@
+name: pocketid_gfg
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0-279.0.dev <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: 
+  cupertino_icons: ^1.0.6
+  get: ^4.6.6
+  google_fonts: ^6.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+
+  fonts:
+    - family: Lato
+      fonts:
+        - asset: fonts/lato.ttf    
+    - family: Lato-Reg
+      fonts:
+        - asset: fonts/Lato-Regular.ttf    
+    - family: Lato-Thin
+      fonts:
+        - asset: fonts/Lato-Thin.ttf    
+    - family: Poppins
+      fonts:
+        - asset: fonts/p1.ttf    
+    - family: Poppins-Reg
+      fonts:
+        - asset: fonts/p3.ttf    
+    - family: Poppins-Thin
+      fonts:
+        - asset: fonts/p5.ttf
