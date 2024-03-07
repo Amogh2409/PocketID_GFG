@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pocketid_gfg/Register/register.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,7 +16,24 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          transitionDuration: const Duration(seconds: 3),
+          transitionsBuilder: ((context, animation, animationtime, child) {
+            animation =
+                CurvedAnimation(parent: animation, curve: Curves.elasticInOut);
+            return ScaleTransition(
+              scale: animation,
+              alignment: Alignment.center,
+              child: child,
+            );
+          }),
+          pageBuilder: ((context, animation, animationtime) {
+            return const Register();
+          }),
+        ),
+      );
     });
   }
 
