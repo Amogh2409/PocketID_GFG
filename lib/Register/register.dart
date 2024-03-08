@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pocketid_gfg/HomePage/HomePage.dart';
 import 'package:pocketid_gfg/utils/reusable.dart';
 
 class Register extends StatefulWidget {
@@ -84,7 +85,12 @@ class _RegisterState extends State<Register> {
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const MyHomePage()));
+                                },
                                 child: const Text(
                                   "Sign Up",
                                   style: TextStyle(
@@ -98,7 +104,6 @@ class _RegisterState extends State<Register> {
                             const SizedBox(
                               height: 15,
                             ),
-
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -121,7 +126,6 @@ class _RegisterState extends State<Register> {
                                     ),
                                   ),
                                 ),
-                              
                               ],
                             )
                           ],
