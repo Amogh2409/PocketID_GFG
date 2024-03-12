@@ -33,14 +33,17 @@ class _MyHomePageState extends State<MyHomePage> {
   String email = "Loading...";
   String docName = "Loading...";
 
-  Container HeadingContainer({text, double? size}) {
+  Container headingContainer({text, double? size}) {
     return Container(
       height: 40,
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
                 "${text}",
@@ -52,35 +55,73 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
           (text == "Quick Links")
-          ? Container(
-            decoration: BoxDecoration(
-              
-              borderRadius: BorderRadius.circular(50),
-              border: Border.all(
-                color: const Color.fromARGB(255, 55, 14, 201),
-                width: 1,
-              ),
-            ),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Text(
-                "View All",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 55, 14, 201),
-                  fontSize: 12,
+              ? Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(
+                      color: const Color.fromARGB(255, 55, 14, 201),
+                      width: 1,
+                    ),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    child: Text(
+                      "View All",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 55, 14, 201),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                )
+              : (text != "Whats New")
+                  ? const Text(
+                      "View All",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 55, 14, 201),
+                        fontSize: 15,
+                      ),
+                    )
+                  : const Text(""),
+        ],
+      ),
+    );
+  }
+
+  Container quickLinks({text, icon, Function? ontap}) {
+    return Container(
+      width: 147,
+      height: 50,
+      child: GestureDetector(
+        onTap: (() => ontap!()),
+        child: Container(
+          height: 70,
+          decoration: BoxDecoration(
+            border: Border.all(width: 1, color: Colors.black54),
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 18,
+                backgroundColor: const Color.fromARGB(31, 158, 158, 158),
+                child: Icon(
+                  icon,
+                  size: 20,
+                  color: const Color.fromARGB(101, 0, 0, 0),
                 ),
               ),
-            ),
-          )
-          : (text != "Whats New")
-            ? const Text("View All",
-              style: TextStyle(
-                color: Color.fromARGB(255, 55, 14, 201),
-                fontSize: 12,
+              const SizedBox(
+                width: 10,
               ),
-            ): const Text(""),
-
-        ],
+              Text(
+                text,
+                style: TextStyle(color: Colors.grey[600], fontSize: 14),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -130,12 +171,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 10,
                     ),
                     Container(
+                      height: 80,
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: const Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,57 +231,121 @@ class _MyHomePageState extends State<MyHomePage> {
                 const SizedBox(
                   height: 10,
                 ),
-
-                HeadingContainer(text: "What's New", size: 15),
-
-                SizedBox(
+                headingContainer(text: "What's New", size: 15),
+                const SizedBox(
                   height: 10,
                 ),
-                Container(
-                  height: 200,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromARGB(255, 55, 14, 201),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-
-                  child: ListView(
-                    children: [
-                      CarouselSlider(
-                        items: [
-                          Container(
-                            height: 250,
-                            child: Image.asset(
-                              imageList[0],
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Container(
-                            height: 250,
-                            child: Image.asset(
-                              imageList[1],
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ], options: CarouselOptions(
-                          autoPlay: true,
-                          height: 200,
-                          autoPlayCurve: Curves.easeOut,
-                          enableInfiniteScroll: true,
-                          autoPlayAnimationDuration: const Duration(milliseconds: 1800),
-                          viewportFraction: 1
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Container(
+                    height: 200,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color.fromARGB(255, 55, 14, 201),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
                         ),
-                      )
+                      ],
+                    ),
+                    child: ListView(
+                      children: [
+                        CarouselSlider(
+                          items: [
+                            Container(
+                              height: 250,
+                              child: Image.asset(
+                                imageList[0],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Container(
+                              height: 250,
+                              child: Image.asset(
+                                imageList[1],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
+                          options: CarouselOptions(
+                              autoPlay: true,
+                              height: 200,
+                              autoPlayCurve: Curves.easeOut,
+                              enableInfiniteScroll: true,
+                              autoPlayAnimationDuration:
+                                  const Duration(milliseconds: 1800),
+                              viewportFraction: 1),
+                        ),
+                        
+                      ],
+                    ),
+                  ),
+                ),
+                headingContainer(text: "Issued Documents", size: 16),
+                SizedBox(
+                  height: 190,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: const [
+                    SizedBox(
+                      width: 15,
+                    ),
+                    // remaining elements
                     ],
                   ),
-                )
+                ),
+                headingContainer(text: "Other Documents", size: 16),
+                SizedBox(
+                  height: 220,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: const [
+                    SizedBox(
+                      width: 15,
+                    ),
+                    // remaining elements
+                    ],
+                  ),
+                ),
+                headingContainer(text: "Quick Links", size: 18),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    height: 50,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        quickLinks(
+                            text: "My Profile",
+                            icon: Icons.person_add_alt_1_outlined,
+                            ontap: () {}),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        quickLinks(
+                            text: "Forget Pin",
+                            icon: Icons.help_outline_rounded,
+                            ontap: () {}),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        quickLinks(
+                            text: "About",
+                            icon: Icons.info_outline_rounded,
+                            ontap: () {}),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
