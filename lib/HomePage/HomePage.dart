@@ -1,6 +1,10 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+import 'package:pocketid_gfg/myProfile.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -52,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                "${text}",
+                "$text",
                 style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: size,
@@ -95,8 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Container quickLinks({text, icon, Function? ontap}) {
-    return Container(
+  SizedBox quickLinks({text, icon, Function? ontap}) {
+    return SizedBox(
       width: 147,
       height: 50,
       child: GestureDetector(
@@ -132,9 +136,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Container ExtractedContainer({text, image, doc, isSaved}) {
+  SizedBox extractedContainer({text, image, doc, isSaved}) {
     bool showDoc = false;
-    return Container(
+    return SizedBox(
       width: 320,
       height: 400,
       child: Column(
@@ -272,6 +276,76 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  SizedBox extractedBox({text, image}) {
+    return SizedBox(
+      height: 200,
+      width: 230,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            height: 185,
+            width: 195,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color.fromARGB(130, 158, 158, 158),
+                  spreadRadius: 0,
+                  blurRadius: 0,
+                  offset: Offset(1, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 23,
+                ),
+                CircleAvatar(
+                  radius: 30,
+                  backgroundColor: const Color.fromARGB(255, 55, 14, 201),
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Image.asset(
+                      "$image",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Text(
+                    "$text",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      letterSpacing: 0.8,
+                      fontFamily: "Poppins-Reg",
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -318,7 +392,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Container(
                     height: 80,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: const Row(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -332,7 +406,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   "Hello,",
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 30,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 SizedBox(
@@ -368,7 +442,22 @@ class _MyHomePageState extends State<MyHomePage> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      child: const CircularProgressIndicator(),
+                      child: FutureBuilder(
+                        future: getDocInfo("profile"),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else {
+                            if (snapshot.data == "empty") {
+                              return Container();
+                            } else {
+                              return Image.network(
+                                "Snapshot.data",
+                                fit: BoxFit.cover,
+                              );
+                          }
+                        }}
+                      ),
                     ),
                   )
                 ],
@@ -434,24 +523,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    ExtractedContainer(
+                    extractedContainer(
                         text: "Aadhar Card",
                         image: "assets/aadhaar.png",
                         doc: "aadhar",
                         isSaved: 1),
-                    ExtractedContainer(
+                    extractedContainer(
                         text: "Pan Card",
                         image: "assets/pan.png",
                         doc: "pan",
                         isSaved: 2),
 
-                    ExtractedContainer(
+                    extractedContainer(
                         text: "Driving License",
                         image: "assets/others.png",
                         doc: "driving",
                         isSaved: 3),
 
-                    ExtractedContainer(
+                    extractedContainer(
                         text: "Covid Vaccine",
                         image: "assets/others.png",
                         doc: "vacine",
@@ -465,11 +554,22 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 220,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: const [
-                    SizedBox(
+                  children: [
+                    const SizedBox(
                       width: 15,
                     ),
-                    // remaining elements
+                    extractedBox(
+                      text: "Vehicle Registration",
+                      image: "assets/vregistration.jpg",
+                    ),
+                    extractedBox(
+                      text: "Birth Certificate",
+                      image: "assets/birthcertificate.png",
+                    ),
+                    extractedBox(
+                      text: "Income Certificate",
+                      image: "assets/income-certificate.jpg",
+                    ),
                   ],
                 ),
               ),
@@ -487,7 +587,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       quickLinks(
                           text: "My Profile",
                           icon: Icons.person_add_alt_1_outlined,
-                          ontap: () {}),
+                          ontap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyProfile(),
+                              ),
+                            );
+                          }),
                       const SizedBox(
                         width: 25,
                       ),
@@ -511,6 +618,34 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class DocContainer extends StatelessWidget {
+  const DocContainer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[];
+        },
+        body: ListView.builder(
+          itemCount: 30,
+          padding: EdgeInsets.all(10),
+          itemBuilder: (BuildContext context, int index) {
+            return SizedBox(
+              height: 50,
+              child: Center(
+                child: Text('Item $index'),
+              ),
+            );
+          },
         ),
       ),
     );
