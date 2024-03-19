@@ -193,6 +193,13 @@ class _MyProfileState extends State<MyProfile> {
   }
 }
 
+class ProfileModel with ChangeNotifier {
+  String url = "empty";
+  var _pickedImage;
+
+  
+}
+
 Future<String> futureFunction() async {
   String url = "empty";
   return url;

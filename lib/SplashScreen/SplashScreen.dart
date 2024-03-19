@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
           transitionDuration: const Duration(seconds: 3),
           transitionsBuilder: ((context, animation, animationtime, child) {
             animation =
-                CurvedAnimation(parent: animation, curve: Curves.elasticInOut);
+                CurvedAnimation(parent: animation, curve: Curves.elasticOut);
             return ScaleTransition(
               scale: animation,
               alignment: Alignment.center,
