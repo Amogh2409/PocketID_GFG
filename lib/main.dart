@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       title: "PocketID",
       debugShowCheckedModeBanner: false,
       // themeMode: provider.themeMode,
-      theme: ThemeData.dark(),
+      theme: ThemeData.light(),
       darkTheme: ThemeData.light(),
       home: const SplashScreen(),
       builder: EasyLoading.init(),

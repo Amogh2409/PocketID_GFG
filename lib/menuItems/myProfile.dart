@@ -62,9 +62,9 @@ class _MyProfileState extends State<MyProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Profile'),
-        backgroundColor: Color.fromARGB(255, 55, 14, 201)
-      ),
+          title: Text('My Profile',),
+          backgroundColor: Color.fromARGB(255, 55, 14, 201)
+          ),
       body: Column(
         children: [
           ClipPath(
@@ -76,7 +76,7 @@ class _MyProfileState extends State<MyProfile> {
             ),
           ),
           Transform.translate(
-            offset: Offset(0, -80),
+            offset: Offset(0, -70),
             child: Column(
               children: [
                 GestureDetector(
@@ -103,7 +103,6 @@ class _MyProfileState extends State<MyProfile> {
                               if (snapshot.data == "empty") {
                                 return Icon(
                                   Icons.add_a_photo,
-                                  size: 100,
                                   color: Colors.grey,
                                 );
                               } else {
@@ -123,7 +122,7 @@ class _MyProfileState extends State<MyProfile> {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 15,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -182,7 +181,6 @@ class _MyProfileState extends State<MyProfile> {
                     "Email",
                     "$email",
                   ),
-                  
                 ],
               ),
             ),
@@ -196,8 +194,6 @@ class _MyProfileState extends State<MyProfile> {
 class ProfileModel with ChangeNotifier {
   String url = "empty";
   var _pickedImage;
-
-  
 }
 
 Future<String> futureFunction() async {

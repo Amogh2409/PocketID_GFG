@@ -2,6 +2,7 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:pocketid_gfg/HomePage/DocImagePage.dart';
 import 'dart:math' as math;
 
 import 'package:pocketid_gfg/menuItems/myProfile.dart';
@@ -158,7 +159,12 @@ class _MyHomePageState extends State<MyHomePage> {
             width: 280,
             height: 170,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,MaterialPageRoute(
+                    builder: (context) => DocImagePage(docName: '$doc', text: text))
+                );
+              },
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -369,7 +375,7 @@ class _MyHomePageState extends State<MyHomePage> {
               angle: math.pi / 0.299,
               child: const Icon(
                 Icons.account_balance_wallet_outlined,
-                color: Colors.white,
+                color: Color.fromARGB(255, 55, 14, 201),
                 size: 30,
               ),
             ),
@@ -379,7 +385,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               "| PocketID",
               style: TextStyle(
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 55, 14, 201),
                   fontSize: 22,
                   fontWeight: FontWeight.normal),
             )
@@ -553,22 +559,22 @@ class _MyHomePageState extends State<MyHomePage> {
                       extractedContainer(
                           text: "Aadhaar Card",
                           image: "assets/aadhaar.png",
-                          doc: "aadhaar",
+                          doc: "Aadhaar Card",
                           isSaved: 1),
                       extractedContainer(
                           text: "PAN Card",
                           image: "assets/pan.png",
-                          doc: "pan",
+                          doc: "Pan Card",
                           isSaved: 2),
                       extractedContainer(
                           text: "Driving License",
                           image: "assets/others.png",
-                          doc: "driving",
+                          doc: "Driving License",
                           isSaved: 3),
                       extractedContainer(
                           text: "Covid Vaccine",
                           image: "assets/others.png",
-                          doc: "vaccine",
+                          doc: "Covid Vaccine",
                           isSaved: 4)
                     ],
                   ),
