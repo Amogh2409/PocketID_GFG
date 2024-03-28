@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pocketid_gfg/menuItems/about.dart';
 import 'package:pocketid_gfg/menuItems/settings.dart';
+import 'package:pocketid_gfg/utils/themeChanger.dart';
+import 'package:provider/provider.dart';
 import 'dart:math' as math;
 
 import '../menuItems/myProfile.dart';
@@ -74,14 +76,31 @@ class _NavDrawerState extends State<NavDrawer> {
                           borderRadius: BorderRadius.circular(50),
                           color: const Color.fromARGB(56, 255, 255, 255),
                         ),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: const Icon(
-                            Icons.nightlight_outlined,
-                          ),
-                        ),
+                        child: Consumer<ThemeProvider>(
+                            builder: (context, ThemeProvider, child) {
+                          return GestureDetector(
+                              onTap: (() {
+                                var theme = ThemeProvider.currentTheme;
+                                if (theme == "system" || theme == "light") {
+                                  ThemeProvider.changeTheme("dark");
+                                } else {
+                                  ThemeProvider.changeTheme("light");
+                                }
+                              }),
+                              child: (ThemeProvider.currentTheme == "light")
+                                  ? Icon(
+                                      Icons.sunny,
+                                      size: 28,
+                                      color: Colors.white,
+                                    )
+                                  : Icon(
+                                      Icons.nightlight_outlined,
+                                      size: 28,
+                                      color: Colors.white,
+                                    ));
+                        }),
                       ),
-                    )
+                    ),
                   ],
                 ),
               )),

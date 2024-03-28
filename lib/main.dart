@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
+import 'package:provider/provider.dart';
 import 'SplashScreen/SplashScreen.dart';
+import 'utils/themeChanger.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding
+      .ensureInitialized(); // Ensure that the binding is initialized before calling the runApp() function.
+  runApp(ChangeNotifierProvider<ThemeProvider>(
+    create: (_) => ThemeProvider(),
+    child: const MyApp(),
+  ));
   configLoading();
 }
 
@@ -30,14 +36,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "PocketID",
-      debugShowCheckedModeBanner: false,
-      // themeMode: provider.themeMode,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.light(),
-      home: const SplashScreen(),
-      builder: EasyLoading.init(),
+    return Consumer<ThemeProvider>(
+      builder: (context, provider, child) {
+        final themeProvider = Provider.of<ThemeProvider>(context);
+        return MaterialApp(
+          title: "PocketID",
+          debugShowCheckedModeBanner: false,
+          // themeMode: provider.themeMode,
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          home: const SplashScreen(),
+          builder: EasyLoading.init(),
+        );
+      },
     );
   }
 }
