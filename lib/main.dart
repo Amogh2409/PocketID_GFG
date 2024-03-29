@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:pocketid_gfg/SplashScreen/checkPin.dart';
 import 'package:provider/provider.dart';
 import 'SplashScreen/SplashScreen.dart';
 import 'utils/themeChanger.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
           // themeMode: provider.themeMode,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          home: const SplashScreen(),
+          home: const CheckPin(),
           builder: EasyLoading.init(),
         );
       },
