@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pocketid_gfg/HomePage/HomePage.dart';
+import 'package:pocketid_gfg/provider/auth_provider.dart';
 import 'package:pocketid_gfg/utils/reusable.dart';
 
 class Register extends StatefulWidget {
@@ -13,6 +14,29 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
+  bool _isNotValidate = false;
+
+  void loginUser() async {
+    if (_emailTextController.text.isNotEmpty &&
+        _passwordTextController.text.isNotEmpty) {
+      var token = await AuthProvider.loginUser(
+          _emailTextController.text, _passwordTextController.text);
+      if (token != null) {
+        print('Login Successful');
+        //facing error after this line 
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const MyHomePage()));
+      } else {
+        print('Login Failed');
+        print('Invalid Credentials');
+      }
+    } else {
+      setState(() {
+        _isNotValidate = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,10 +110,7 @@ class _RegisterState extends State<Register> {
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => const MyHomePage()));
+                                  loginUser();
                                 },
                                 child: const Text(
                                   "Sign Up",
@@ -116,7 +137,11 @@ class _RegisterState extends State<Register> {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    Navigator.pop(context);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MyHomePage()));
                                   },
                                   child: const Text(
                                     "Sign In",

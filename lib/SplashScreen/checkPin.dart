@@ -11,7 +11,7 @@ class CheckPin extends StatefulWidget {
 class _CheckPinState extends State<CheckPin> {
   @override
   Widget build(BuildContext context) {
-    return OtpScreenState();
+    return const OtpScreenState();
   }
 }
 
@@ -37,7 +37,7 @@ class _OtpScreenStateState extends State<OtpScreenState> {
                   MainAxisSize.min, // To make the column as small as possible
               children: <Widget>[
                 buildSecurityText(),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 )
               ],
@@ -53,7 +53,7 @@ class _OtpScreenStateState extends State<OtpScreenState> {
     return Expanded(
       child: Container(
         alignment: Alignment.bottomCenter,
-        padding: EdgeInsets.only(bottom: 32),
+        padding: const EdgeInsets.only(bottom: 32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -111,7 +111,7 @@ class _OtpScreenStateState extends State<OtpScreenState> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
+                const SizedBox(
                   width: 60,
                   child: MaterialButton(
                     onPressed: null,
@@ -121,7 +121,7 @@ class _OtpScreenStateState extends State<OtpScreenState> {
                 keyboardNumber(n: 0,
                     onPressed: () {}),
 
-                Container(
+                SizedBox(
                   width: 60,
                   child: MaterialButton(
                     height: 60,
@@ -129,7 +129,7 @@ class _OtpScreenStateState extends State<OtpScreenState> {
                       borderRadius: BorderRadius.circular(60)
                     ),
                     onPressed: () {},
-                    child: Icon(
+                    child: const Icon(
                       Icons.backspace_outlined,
                       color: Colors.deepOrange,
                     ),
@@ -144,7 +144,7 @@ class _OtpScreenStateState extends State<OtpScreenState> {
   }
 
   buildSecurityText() {
-    return Text(
+    return const Text(
       "Enter Security Pin",
       style: TextStyle(
         color: Colors.black,
@@ -172,14 +172,14 @@ class keyboardNumber extends StatelessWidget {
           shape: BoxShape.circle, color: Colors.blueAccent.withOpacity(0.1)),
       alignment: Alignment.center,
       child: MaterialButton(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         onPressed: onPressed,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)),
         height: 90,
         child: Text(
           "$n",
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 24,
               color: Colors.blueAccent,
               fontWeight: FontWeight.bold),

@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
           // themeMode: provider.themeMode,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          home: const CheckPin(),
+          home: const SplashScreen(),
           builder: EasyLoading.init(),
         );
       },
