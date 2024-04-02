@@ -1,38 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:pocketid_gfg/HomePage/HomePage.dart';
-import 'package:pocketid_gfg/Register/Login.dart';
+import 'package:pocketid_gfg/Register/register.dart';
 import 'package:pocketid_gfg/provider/auth_provider.dart';
+import 'package:pocketid_gfg/utils/reusable.dart';
 
-import '../utils/reusable.dart';
-
-
-class Register extends StatefulWidget {
-  const Register({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<Login> createState() => _LoginState();
 }
 
-class _RegisterState extends State<Register> {
+class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isNotValidate = false;
 
-
-  void registerUser() async{
-    if(_emailController.text.isNotEmpty && _passwordController.text.isNotEmpty){
-      bool isRegistered = await AuthProvider.registerUser(_emailController.text, _passwordController.text);
-
-      if(isRegistered){
-        print('Registration successful');
-
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyHomePage()));
+  void loginUser() async {
+    if (_emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty) {
+      var token = await AuthProvider.loginUser(
+          _emailController.text, _passwordController.text);
+      if (token != null) {
+        print('Login successful');
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const MyHomePage()));
+      } else {
+        print('Login failed');
       }
-      else{
-        print('Registration failed');
-      }
+    } else {
+      setState(() {
+        _isNotValidate = true;
+      });
     }
-    
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +91,16 @@ class _RegisterState extends State<Register> {
                             const SizedBox(
                               height: 25,
                             ),
-                            
+                            Container(
+                              height: 35,
+                              child: Text(
+                                "Forgot Password?",
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
                             Container(
                               height: 43,
                               width: 150,
@@ -97,7 +110,7 @@ class _RegisterState extends State<Register> {
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  registerUser();
+                                  loginUser();
                                 },
                                 child: const Text(
                                   "Sign In",
@@ -116,7 +129,7 @@ class _RegisterState extends State<Register> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
-                                  "Already have an account?",
+                                  "Create an account?",
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 15,
@@ -128,10 +141,10 @@ class _RegisterState extends State<Register> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const Login()));
+                                                const Register()));
                                   },
                                   child: const Text(
-                                    "Sign In",
+                                    "Sign Up",
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 55, 14, 201),
                                       fontSize: 15,
@@ -152,6 +165,5 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
-  
   }
 }

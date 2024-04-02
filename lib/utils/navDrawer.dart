@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:pocketid_gfg/menuItems/about.dart';
 import 'package:pocketid_gfg/menuItems/settings.dart';
 import 'package:pocketid_gfg/utils/themeChanger.dart';
+import 'package:pocketid_gfg/utils/users.dart';
 import 'package:provider/provider.dart';
 import 'dart:math' as math;
 
@@ -199,7 +200,7 @@ class _NavDrawerState extends State<NavDrawer> {
               ),
             ),
             onTap: () => {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage(),),)
+              UserManagement().logOut(context),
             },
           ),
         ],

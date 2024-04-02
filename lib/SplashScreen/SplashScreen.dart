@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:pocketid_gfg/Register/register.dart';
+import 'package:pocketid_gfg/Register/Login.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
             );
           }),
           pageBuilder: ((context, animation, animationtime) {
-            return const Register();
+            return const Login();
           }),
         ),
       );
