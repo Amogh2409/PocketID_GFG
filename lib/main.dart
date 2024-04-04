@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: "PocketID",
           debugShowCheckedModeBanner: false,
-          // themeMode: provider.themeMode,
+          themeMode: provider.themeMode,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
           home: const SplashScreen(),

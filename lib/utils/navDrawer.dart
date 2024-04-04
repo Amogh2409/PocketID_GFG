@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pocketid_gfg/menuItems/about.dart';
@@ -9,19 +8,24 @@ import 'package:provider/provider.dart';
 import 'dart:math' as math;
 
 import '../menuItems/myProfile.dart';
-
 class NavDrawer extends StatefulWidget {
   const NavDrawer({super.key, required this.email, required this.username});
-
   final String email;
   final String username;
 
   @override
-  State<NavDrawer> createState() => _NavDrawerState();
+  State<NavDrawer> createState() => NavDrawerState();
 }
 
-class _NavDrawerState extends State<NavDrawer> {
+class NavDrawerState extends State<NavDrawer> {
+  String themeNow = "dark";
+  String profile = "empty";
+
   @override
+  void initState() {
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
@@ -31,6 +35,7 @@ class _NavDrawerState extends State<NavDrawer> {
               padding: EdgeInsets.zero,
               child: Container(
                 child: Stack(
+                  // fit: StackFit.expand,
                   children: [
                     Container(
                       color: const Color.fromARGB(255, 55, 14, 201),
@@ -53,11 +58,9 @@ class _NavDrawerState extends State<NavDrawer> {
                             ),
                             const Text(
                               "PocketID",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                            ),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            )
                           ],
                         ),
                       ),
@@ -68,18 +71,17 @@ class _NavDrawerState extends State<NavDrawer> {
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Color.fromARGB(26, 0, 0, 0),
-                                blurRadius: 2.0,
-                                spreadRadius: -2.0)
-                          ],
-                          borderRadius: BorderRadius.circular(50),
-                          color: const Color.fromARGB(56, 255, 255, 255),
-                        ),
+                            boxShadow: const [
+                              BoxShadow(
+                                  color: Color.fromARGB(26, 0, 0, 0),
+                                  blurRadius: 2.0,
+                                  spreadRadius: -2.0),
+                            ],
+                            borderRadius: BorderRadius.circular(50),
+                            color: const Color.fromARGB(56, 255, 255, 255)),
                         child: Consumer<ThemeProvider>(
-                            builder: (context, ThemeProvider, child) {
-                          return GestureDetector(
+                          builder: (context, ThemeProvider, child) {
+                            return GestureDetector(
                               onTap: (() {
                                 var theme = ThemeProvider.currentTheme;
                                 if (theme == "system" || theme == "light") {
@@ -89,19 +91,18 @@ class _NavDrawerState extends State<NavDrawer> {
                                 }
                               }),
                               child: (ThemeProvider.currentTheme == "light")
-                                  ? Icon(
-                                      Icons.sunny,
-                                      size: 28,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
+                                  ? const Icon(Icons.sunny,
+                                      size: 28, color: Colors.white)
+                                  : const Icon(
                                       Icons.nightlight_outlined,
                                       size: 28,
                                       color: Colors.white,
-                                    ));
-                        }),
+                                    ),
+                            );
+                          },
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               )),
@@ -114,19 +115,12 @@ class _NavDrawerState extends State<NavDrawer> {
               size: 30,
             ),
             title: const Text(
-              "My Profile",
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.normal,
-              ),
+              'My Profile',
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.normal),
             ),
             onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MyProfile(),
-                ),
-              )
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const MyProfile()))
             },
           ),
           ListTile(
@@ -136,18 +130,11 @@ class _NavDrawerState extends State<NavDrawer> {
             ),
             title: const Text(
               'About',
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.normal,
-              ),
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.normal),
             ),
             onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const About(),
-                ),
-              )
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const About()))
             },
           ),
           ListTile(
@@ -157,18 +144,11 @@ class _NavDrawerState extends State<NavDrawer> {
             ),
             title: const Text(
               'Settings',
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.normal,
-              ),
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.normal),
             ),
             onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SettingsPage(),
-                ),
-              )
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const SettingsPage()))
             },
           ),
           ListTile(
@@ -178,30 +158,22 @@ class _NavDrawerState extends State<NavDrawer> {
             ),
             title: const Text(
               'Help',
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.normal,
-              ),
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.normal),
             ),
             onTap: () => {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage(),),)
+              
             },
           ),
           ListTile(
             leading: const Icon(
-              Icons.logout,
+              Icons.logout_rounded,
               size: 30,
             ),
             title: const Text(
               'Logout',
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.normal,
-              ),
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.normal),
             ),
-            onTap: () => {
-              UserManagement().logOut(context),
-            },
+            onTap: () => {UserManagement().logOut(context)},
           ),
         ],
       ),

@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+String CorrectPin = "";
+final snackBar = SnackBar(
+  content: const Text('Error '),
+  behavior: SnackBarBehavior.floating,
+  action: SnackBarAction(
+    label: 'Undo',
+    textColor: Colors.yellow,
+    onPressed: () {
+      // Some code to undo the change.
+    },
+  ),
+);
+
 class CheckPin extends StatefulWidget {
   const CheckPin({super.key});
 
@@ -23,6 +36,17 @@ class OtpScreenState extends StatefulWidget {
 }
 
 class _OtpScreenStateState extends State<OtpScreenState> {
+  List<String> currentPin = ["", "", "", ""];
+  TextEditingController pinOneController = TextEditingController();
+  TextEditingController pinTwoController = TextEditingController();
+  TextEditingController pinThreeController = TextEditingController();
+  TextEditingController pinFourController = TextEditingController();
+
+  var outlineInputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(20),
+    borderSide: const BorderSide(color: Colors.white),
+  );
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -118,16 +142,13 @@ class _OtpScreenStateState extends State<OtpScreenState> {
                     child: SizedBox(),
                   ),
                 ),
-                keyboardNumber(n: 0,
-                    onPressed: () {}),
-
+                keyboardNumber(n: 0, onPressed: () {}),
                 SizedBox(
                   width: 60,
                   child: MaterialButton(
                     height: 60,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(60)
-                    ),
+                        borderRadius: BorderRadius.circular(60)),
                     onPressed: () {},
                     child: const Icon(
                       Icons.backspace_outlined,
@@ -154,8 +175,65 @@ class _OtpScreenStateState extends State<OtpScreenState> {
     );
   }
 
-}
+  setPin(int n, String text) {
+    switch (n) {
+      case 1:
+        pinOneController.text = text;
+        break;
+      case 2:
+        pinTwoController.text = text;
+        break;
+      case 3:
+        pinThreeController.text = text;
+        break;
+      case 4:
+        pinFourController.text = text;
+        break;
+    }
+  }
 
+  buildPinRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        PinNumber(
+            controller: pinOneController,
+            outlineInputBorder: outlineInputBorder),
+        PinNumber(
+            controller: pinTwoController,
+            outlineInputBorder: outlineInputBorder),
+        PinNumber(
+            controller: pinThreeController,
+            outlineInputBorder: outlineInputBorder),
+        PinNumber(
+            controller: pinFourController,
+            outlineInputBorder: outlineInputBorder),
+      ],
+    );
+  }
+
+  buildExitButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: MaterialButton(
+            onPressed: () {},
+            height: 50,
+            minWidth: 50,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+            child: const Icon(
+              Icons.clear,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 class keyboardNumber extends StatelessWidget {
   const keyboardNumber({super.key, required this.n, required this.onPressed});
@@ -183,6 +261,38 @@ class keyboardNumber extends StatelessWidget {
               fontSize: 24,
               color: Colors.blueAccent,
               fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+}
+
+class PinNumber extends StatelessWidget {
+  const PinNumber(
+      {super.key, required this.controller, required this.outlineInputBorder});
+
+  final TextEditingController controller;
+  final OutlineInputBorder outlineInputBorder;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 50,
+      height: 50,
+      child: TextField(
+        controller: controller,
+        enabled: false,
+        obscureText: true,
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(16),
+          border: outlineInputBorder,
+          filled: true,
+          fillColor: Color.fromARGB(51, 255, 255, 255),
+        ),
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

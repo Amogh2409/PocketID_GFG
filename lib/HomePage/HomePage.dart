@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../menuItems/about.dart';
 import '../menuItems/settings.dart';
 import '../utils/navDrawer.dart';
+import 'imageUploader.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -27,8 +28,8 @@ class _MyHomePageState extends State<MyHomePage> {
     "voter",
     "driving",
     "vaccine",
-    "passport"
-        "birth",
+    "passport",
+    "birth",
     "income",
   ];
 
@@ -49,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return "empty";
   }
 
-    Future<String> getProfile() async {
+  Future<String> getProfile() async {
     return "empty";
   }
 
@@ -161,9 +162,10 @@ class _MyHomePageState extends State<MyHomePage> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
-                  context,MaterialPageRoute(
-                    builder: (context) => DocImagePage(docName: '$doc', text: text))
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            DocImagePage(docName: '$doc', text: text)));
               },
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -227,60 +229,74 @@ class _MyHomePageState extends State<MyHomePage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  FutureBuilder(
-                    future: getDocInfo(doc),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Text(
-                          "Save Now",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
-                        );
-                      } else {
-                        if (snapshot.data == "empty") {
-                          return Container(
-                            height: 45,
-                            width: 219,
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 55, 14, 201),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                "Save Now",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
+                  ChangeNotifierProvider<ImageManager>(
+                    create: (context) => ImageManager(),
+                    builder: (context, child) {
+                      return Consumer<ImageManager>(
+                        builder: (context, ImageManager, child) {
+                          return FutureBuilder(
+                            future: getDocInfo(doc),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Text(
+                                  "Save Now",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  ),
+                                );
+                              } else {
+                                if (snapshot.data == "empty") {
+                                  return Container(
+                                    height: 45,
+                                    width: 219,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 55, 14, 201),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        "Save Now",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Container(
+                                    height: 45,
+                                    width: 219,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 55, 14, 201),
+                                      borderRadius: BorderRadius.circular(50),
+                                      border: Border.all(
+                                        color: const Color.fromARGB(
+                                            255, 55, 14, 201),
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        "View Now",
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 55, 14, 201),
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }
+                            },
                           );
-                        } else {
-                          return Container(
-                            height: 45,
-                            width: 219,
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 55, 14, 201),
-                              borderRadius: BorderRadius.circular(50),
-                              border: Border.all(
-                                color: const Color.fromARGB(255, 55, 14, 201),
-                                width: 1,
-                              ),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                "View Now",
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 55, 14, 201),
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                      }
+                        },
+                      );
                     },
                   ),
                 ],
@@ -393,7 +409,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       drawer: NavDrawer(
-        username : firstName,
+        username: firstName,
         email: email,
       ),
       body: SafeArea(
